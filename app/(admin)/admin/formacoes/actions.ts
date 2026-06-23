@@ -4,6 +4,15 @@ import { revalidatePath } from 'next/cache'
 import { createClient } from '@/utils/supabase/server'
 import { createAdminClient } from '@/utils/supabase/admin'
 
+function toSlug(str: string): string {
+  return str
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
 async function assertAdmin() {
   const supabase = await createClient()
   const {
@@ -24,8 +33,10 @@ export async function createFormacao(formData: FormData) {
   await assertAdmin()
   const admin = createAdminClient()
 
+  const title = formData.get('title') as string
   const payload = {
-    title: formData.get('title') as string,
+    title,
+    slug: toSlug(title),
     description: (formData.get('description') as string) || null,
     cover_url: (formData.get('cover_url') as string) || null,
     is_published: formData.get('is_published') === 'true',
