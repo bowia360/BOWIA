@@ -246,3 +246,56 @@ em vez de construir no vácuo.
 **Numeração das fases no ROADMAP.md:** mantém os nomes "Fase 3" e "Fase 4"
 como estavam (para não reescrever referências cruzadas em outros documentos),
 mas a ordem de execução real passa a ser Fase 4 → Fase 3.
+
+---
+
+### #012 — Workflow real do n8n adiado para depois do deploy
+**Status:** ✅ decidido — 2026-06-23
+
+**Contexto:** o Estúdio UGC · Imagem foi codado e testado com sucesso usando
+`UGC_MOCK_MODE=true` (fluxo completo de fila/status/resultado validado). Para
+testar o n8n real, seria necessário expor o `localhost` do Rafael publicamente
+via túnel temporário (ngrok ou similar), já que o n8n roda numa VPS separada
+(`automacoes.bow360.cloud`) e precisa de um endereço público para chamar o
+callback de volta.
+
+**Decisão:** adiar a configuração do workflow real do n8n para depois do
+deploy em `bowcreator.com.br` — quando o Next.js estiver publicamente
+acessível, o n8n pode chamar o callback diretamente, sem necessidade de túnel
+temporário.
+
+**Motivo:** evitar trabalho duplicado (configurar ngrok agora, testar, depois
+reconfigurar tudo de novo com a URL de produção). O modo mock já validou que
+a estrutura de dados e o fluxo de UI funcionam corretamente — o que falta é
+só a chamada real ao fal.ai, que pode ser conectada quando o domínio estiver
+ativo.
+
+**Estado deixado para retomar:** `UGC_MOCK_MODE=true` permanece no
+`.env.local` até este ponto ser revisitado. Os contratos de payload dos três
+endpoints (`/api/estudio/gerar-imagem`, webhook `ugc-image-start` do n8n,
+`/api/webhooks/fal-callback`) já estão documentados e não devem mudar quando
+o n8n real for configurado.
+
+---
+
+### #013 — Estúdio UGC · Vídeo (Veo3) pausado por falta de chave de API
+**Status:** ⏸️ pausado — 2026-06-23
+
+**Contexto:** depois de completar Estúdio UGC · Imagem (em modo mock) e
+Cofre de Chaves (Fase 3), o próximo passo natural seria completar o par com
+Vídeo (Veo3 via fal.ai). Porém o Rafael não tem, neste momento, uma chave de
+API ativa para fal.ai/Veo3.
+
+**Decisão:** pular a Fase 4 · Vídeo por agora e avançar para Fase 6 (Trilhas
+e Formações), que não depende de nenhuma chave de API externa — só do banco
+de dados já existente e de conteúdo real a ser produzido pelo Rafael.
+
+**Por que não usar modo mock como na imagem:** mock de vídeo teria valor
+limitado sem nenhuma chave real para eventualmente validar — diferente da
+imagem, onde testar o fluxo de fila/status já trouxe confiança real na
+estrutura. Melhor esperar a chave existir para construir e testar de forma
+completa numa única rodada.
+
+**Retomar quando:** o Rafael tiver uma chave de API da fal.ai ativa. O
+código de Imagem já serve como modelo direto — Vídeo segue a mesma
+arquitetura (generations.type = 'video', mesmo padrão de webhook/callback).
