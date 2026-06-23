@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
+import Link from 'next/link'
 import { createFormacao, updateFormacao, deleteFormacao } from './actions'
 
 type Formacao = {
@@ -246,6 +247,12 @@ export default function FormacoesClient({ formacoes }: Props) {
               )}
             </div>
             <div className="shrink-0 flex items-center gap-2 mt-0.5">
+              <Link
+                href={`/admin/formacoes/${f.id}`}
+                className="text-xs text-neon-blue-lt hover:text-white transition-colors px-2 py-1"
+              >
+                Trilhas →
+              </Link>
               <button
                 onClick={() => openEdit(f)}
                 className="text-xs text-text-muted hover:text-neon-blue-lt transition-colors px-2 py-1"
