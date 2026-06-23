@@ -30,13 +30,15 @@ export async function proxy(request: NextRequest) {
 
   const { pathname } = request.nextUrl
 
-  // Rotas dentro de (app) exigem sessão válida
+  // Rotas dentro de (app) e (admin) exigem sessão válida
   const isAppRoute =
     pathname.startsWith('/dashboard') ||
     pathname.startsWith('/formacoes') ||
     pathname.startsWith('/studio') ||
     pathname.startsWith('/galeria') ||
-    pathname.startsWith('/perfil')
+    pathname.startsWith('/favoritos') ||
+    pathname.startsWith('/perfil') ||
+    pathname.startsWith('/admin')
 
   if (!user && isAppRoute) {
     const url = request.nextUrl.clone()

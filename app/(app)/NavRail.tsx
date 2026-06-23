@@ -35,7 +35,11 @@ const navItems = [
   },
 ]
 
-export default function NavRail() {
+type Props = {
+  isAdmin: boolean
+}
+
+export default function NavRail({ isAdmin }: Props) {
   const pathname = usePathname()
 
   return (
@@ -65,6 +69,22 @@ export default function NavRail() {
             </Link>
           )
         })}
+
+        {isAdmin && (
+          <Link
+            href="/admin"
+            title="Painel Admin"
+            className={`w-full h-10 flex items-center justify-center rounded-[10px] transition-colors mt-2 ${
+              pathname.startsWith('/admin')
+                ? 'bg-neon-blue/15 text-neon-blue-lt'
+                : 'text-text-dim hover:text-text-muted hover:bg-white/5'
+            }`}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+          </Link>
+        )}
       </nav>
 
       <form action={logout} className="px-2 w-full">
