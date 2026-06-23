@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-dark: #06090f;
+  --bg-alt: #080c14;
+  --glass-card: rgba(15, 22, 36, 0.55);
+  --glass-solid: rgba(13, 19, 31, 0.92);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hi: rgba(255, 255, 255, 0.16);
+  --neon-blue: #0066ff;
+  --neon-blue-lt: #3d8bff;
+  --neon-glow: rgba(0, 102, 255, 0.45);
+  --green: #36e27b;
+  --text-white: #ffffff;
+  --text-off: #e8edf5;
+  --text-muted: #8a99ad;
+  --text-dim: #5a6678;
+  --radius: 18px;
+  --radius-lg: 26px;
+  --shadow-card: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 0 1px rgba(0, 102, 255, 0.25), 0 18px 60px -12px var(--neon-glow);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@property --beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes beamRotate {
+  to { --beam-angle: 360deg; }
+}
+
+@keyframes dotPing {
+  0% { transform: scale(1); opacity: 0.7; }
+  70%, 100% { transform: scale(3); opacity: 0; }
+}
+
+@layer components {
+  .glass-card {
+    background: var(--glass-card);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .bg-grid {
+    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 64px 100%;
+    -webkit-mask-image: linear-gradient(#000, transparent);
+    mask-image: linear-gradient(#000, transparent);
+  }
+
+  .btn-primary {
+    background: linear-gradient(180deg, #1f7bff, #0066ff);
+    box-shadow: 0 10px 30px -8px rgba(0, 102, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transition: filter 0.15s var(--ease);
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.08);
+  }
+
+  .border-beam {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.6px;
+    background: conic-gradient(
+      from var(--beam-angle),
+      transparent 0 70%,
+      #0066ff 84%,
+      #9fc4ff 92%,
+      transparent 100%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: beamRotate 5s linear infinite;
+    pointer-events: none;
+  }
+
+  .text-gradient {
+    background: linear-gradient(100deg, #fff 20%, #3d8bff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
