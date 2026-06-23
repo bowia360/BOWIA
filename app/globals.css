@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  color-scheme: dark;
   --bg-dark: #06090f;
   --bg-alt: #080c14;
   --glass-card: rgba(15, 22, 36, 0.55);
@@ -89,4 +90,12 @@
     background-clip: text;
     color: transparent;
   }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #0d131f inset;
+  -webkit-text-fill-color: #e8edf5;
+  transition: background-color 5000s ease-in-out 0s;
 }

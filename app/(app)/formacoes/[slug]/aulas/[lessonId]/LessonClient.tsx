@@ -60,9 +60,10 @@ export default function LessonClient({
   }
 
   return (
-    <div className="flex h-full overflow-hidden">
+    <div className="flex flex-col lg:flex-row lg:h-full lg:overflow-hidden">
       {/* Main content */}
-      <div className="flex-1 overflow-auto p-6">
+      <div className="flex-1 lg:overflow-auto p-6">
+        <div className="max-w-[880px] mx-auto">
         {/* Breadcrumb */}
         <div className="flex items-center gap-1.5 text-xs text-text-dim mb-5">
           <Link href="/formacoes" className="hover:text-text-muted transition-colors">
@@ -166,10 +167,11 @@ export default function LessonClient({
             </Link>
           )}
         </div>
+        </div>{/* end max-w-[880px] */}
       </div>
 
       {/* Sidebar curriculum */}
-      <aside className="w-72 shrink-0 border-l border-[rgba(255,255,255,0.06)] overflow-auto">
+      <aside className="w-full lg:w-72 shrink-0 border-t lg:border-t-0 lg:border-l border-[rgba(255,255,255,0.06)] lg:overflow-auto">
         <div className="p-4 border-b border-[rgba(255,255,255,0.06)]">
           <Link
             href={`/formacoes/${formationSlug}`}

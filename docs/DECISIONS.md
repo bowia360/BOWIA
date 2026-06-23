@@ -325,3 +325,30 @@ admin, não a lógica do player.
 provider exigir um script JS específico (em vez de simples iframe) para
 features como proteção anti-pirataria ou analytics avançado, o player pode
 precisar de ajuste nessa hora.
+
+---
+
+### #015 — UX polish pós-teste end-to-end da Fase 6
+**Status:** ✅ decidido — 2026-06-23
+
+**Contexto:** após testar Formações/Trilhas/Cursos/Aulas end-to-end via admin, três
+problemas de UX foram identificados:
+
+1. **Selects ilegíveis no admin** — `<select>` nativo e `<input>` com autofill do Chrome
+   renderizavam com fundo branco (herança do tema claro do navegador), tornando campos
+   de "Nível" (Trilhas) e "Tipo" (Cursos) ilegíveis.
+2. **Player de vídeo descomunal em widescreen** — `flex-1` do layout absorvia toda a
+   largura disponível (~1600px em monitor wide) e o iframe 16:9 acompanhava.
+3. **Ícone de imagem quebrada** — quando `cover_url` era válido mas apontava para URL
+   inexistente, o `<img>` mostrava o ícone de broken image em vez do fallback.
+
+**Decisões:**
+- `color-scheme: dark` no `:root` do `globals.css` — resolve controles nativos de
+  forma global; sem isso, qualquer `<select>` ou `<input type="date">` futuro herda tema claro.
+- Autofill override via `-webkit-box-shadow: 0 0 0 1000px #0D131F inset` — o Chrome não
+  permite sobrescrever a cor de autofill de outra forma.
+- Player: `max-w-[880px] mx-auto` no conteúdo da aula + layout responsivo
+  `flex-col lg:flex-row` — sidebar empilha abaixo do player em telas estreitas, fica lateral em `lg:`.
+- `CoverImage` client component com `onError` que oculta o `<img>` quando falha,
+  revelando o gradiente de fundo já presente como placeholder — sem JS extra no bundle
+  além do handler inline.

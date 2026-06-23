@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
+import { CoverImage } from './CoverImage'
 
 type Formation = {
   id: string
@@ -63,14 +64,13 @@ export default async function FormacoesPage() {
               className="glass-card overflow-hidden hover:border-[rgba(255,255,255,0.12)] transition-colors group"
             >
               <div className="h-40 relative overflow-hidden bg-gradient-to-br from-neon-blue/20 to-[rgba(0,102,255,0.04)]">
-                {f.cover_url ? (
-                  <img
+                <div className="absolute inset-0 bg-grid opacity-40" />
+                {f.cover_url && (
+                  <CoverImage
                     src={f.cover_url}
                     alt={f.title}
-                    className="w-full h-full object-cover opacity-80 group-hover:opacity-90 transition-opacity"
+                    className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-90 transition-opacity"
                   />
-                ) : (
-                  <div className="absolute inset-0 bg-grid opacity-40" />
                 )}
               </div>
               <div className="p-5">

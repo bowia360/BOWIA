@@ -78,7 +78,7 @@ controle do projeto, junto com Linear (`linear.app/bow360/team/BOW`).
 ## Fase 6 — Trilhas + Assinatura
 **Status:** concluído (telas de conteúdo); Asaas/pagamento em sessão dedicada futura
 
-- [x] Telas: lista de Formações (`/formacoes`), currículo de Trilha, player de Aula com progresso
+- [x] Telas: lista de Formações (`/formacoes`), currículo de Trilha, player de Aula com progresso — **testado end-to-end via admin (2026-06-23); ajustes UX aplicados: color-scheme dark, player max-w, fallback de capa (DECISIONS.md #015)**
 - [x] CRUD admin completo: Formações → Trilhas → Cursos → Aulas (drill-down com breadcrumb)
 - [x] Progresso por aula — `lesson_progress` com upsert + "Marcar como concluída"
 - [x] Decisão de gateway de pagamento — **Asaas** (DECISIONS.md #004)

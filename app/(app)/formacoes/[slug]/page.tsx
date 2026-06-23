@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
+import { CoverImage } from '../CoverImage'
 
 type Lesson = {
   id: string
@@ -117,15 +118,16 @@ export default async function FormacaoPage({
     <div className="max-w-3xl mx-auto p-8">
       {/* Hero */}
       <div className="glass-card overflow-hidden mb-8">
-        {formation.cover_url && (
-          <div className="h-52 overflow-hidden">
-            <img
+        <div className="h-52 relative overflow-hidden bg-gradient-to-br from-neon-blue/20 to-[rgba(0,102,255,0.04)]">
+          <div className="absolute inset-0 bg-grid opacity-30" />
+          {formation.cover_url && (
+            <CoverImage
               src={formation.cover_url}
               alt={formation.title}
-              className="w-full h-full object-cover opacity-80"
+              className="absolute inset-0 w-full h-full object-cover opacity-80"
             />
-          </div>
-        )}
+          )}
+        </div>
         <div className="p-6">
           <h1 className="font-sora font-bold text-2xl text-white mb-2">
             {formation.title}
