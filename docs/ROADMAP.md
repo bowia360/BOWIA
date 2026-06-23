@@ -27,29 +27,28 @@ controle do projeto, junto com Linear (`linear.app/bow360/team/BOW`).
 - [x] Shell de navegação (rail lateral + área de conteúdo)
 
 ## Fase 1 — Galeria de Prompts
-**Status:** concluído
+**Status:** em andamento
 
 - [x] Seed de prompts de exemplo na tabela `prompts` (docs/seed-prompts.sql)
-- [x] Grid filtrável por categoria + busca
-- [x] Modal de preview com copiar + favoritar
-- [x] Tela "Meus favoritos"
+- [ ] Grid filtrável por categoria + busca
+- [ ] Modal de preview com copiar + favoritar
+- [ ] Tela "Meus favoritos"
 
 ## Fase Admin — Painel de gestão de conteúdo
-**Status:** concluído
+**Status:** não iniciado (ver DECISIONS.md #009)
 
-- [x] Rota `/admin` protegida por `profiles.role = 'admin'`
-- [x] CRUD de Prompts (substitui inserts manuais via SQL Editor)
-- [x] CRUD de Formações (nível formação — título, descrição, capa por URL, publicar/despublicar)
-- [ ] CRUD de Trilhas → Cursos → Aulas (próxima iteração)
+- [ ] Rota `/admin` protegida por `profiles.role = 'admin'`
+- [ ] CRUD de Prompts (substitui inserts manuais via SQL Editor)
+- [ ] CRUD de Formações → Trilhas → Cursos → Aulas
 - [ ] CRUD de Planos
-- [ ] Upload de imagens via Supabase Storage
+- [ ] Upload de imagens (preview de prompt, capa de formação) via Supabase Storage
 
 ## Fase 2 — Gerador de Prompt
-**Status:** não iniciado
+**Status:** concluído
 
-- [ ] Decisão de provider padrão (gerenciado) para o gerador
-- [ ] Interface de descrição → prompt gerado
-- [ ] Integração com Claude/GPT/Gemini via API route do Next.js
+- [x] Decisão de provider padrão (gerenciado) — **Claude** (DECISIONS.md #010)
+- [x] Interface de descrição → prompt gerado
+- [x] Integração com Claude via API route do Next.js (GPT/Gemini disponíveis via BYOK)
 
 ## Fase 3 — Cofre de Chaves (BYOK)
 **Status:** não iniciado
