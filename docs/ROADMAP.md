@@ -51,11 +51,11 @@ controle do projeto, junto com Linear (`linear.app/bow360/team/BOW`).
 - [ ] Integração com Claude via API route do Next.js (GPT/Gemini disponíveis via BYOK)
 
 ## Fase 3 — Cofre de Chaves (BYOK)
-**Status:** não iniciado
+**Status:** concluído
 
-- [ ] Decisão de criptografia (Supabase Vault / pgsodium ou alternativa)
-- [ ] Tela "Conexões" no perfil
-- [ ] Validação de chave ao salvar (testar a chave antes de marcar `is_active`)
+- [x] Decisão de criptografia — AES-256-GCM via Node crypto + ENCRYPTION_KEY (ver DECISIONS.md #012)
+- [x] Tela "Conexões" no perfil (/conexoes) — 4 providers, salvar/substituir/remover
+- [ ] Validação de chave ao salvar (testar a chave antes de marcar `is_active`) — iteração futura
 
 ## Fase 4 — Estúdio UGC · Imagem
 **Status:** não iniciado
