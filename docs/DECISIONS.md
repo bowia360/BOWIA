@@ -299,3 +299,29 @@ completa numa única rodada.
 **Retomar quando:** o Rafael tiver uma chave de API da fal.ai ativa. O
 código de Imagem já serve como modelo direto — Vídeo segue a mesma
 arquitetura (generations.type = 'video', mesmo padrão de webhook/callback).
+
+---
+
+### #014 — Player de aula genérico via iframe (host de vídeo não decidido)
+**Status:** ✅ decidido — 2026-06-23
+
+**Contexto:** ao iniciar a Fase 6 (Trilhas e Formações), foi necessário
+decidir como o player de aula vai renderizar `lessons.video_url` sem ainda
+ter escolhido definitivamente o host de vídeo (candidato provável: Panda
+Video, mas não confirmado).
+
+**Decisão:** construir o player como um `<iframe>` genérico, recebendo
+`lessons.video_url` diretamente como `src`, com aspect-ratio 16:9 responsivo.
+Não acoplar a nenhum SDK ou script proprietário de provider específico nesta
+fase.
+
+**Motivo:** o campo já é texto livre no schema, então qualquer host que
+forneça URL de embed (Panda Video, Vimeo, YouTube) funciona sem mudança de
+banco. Decidir o host definitivamente pode ser adiado sem bloquear o
+progresso da Fase 6 — quando decidido, só ajusta o formato da URL salva no
+admin, não a lógica do player.
+
+**Retomar quando:** o host de vídeo for escolhido definitivamente — se o
+provider exigir um script JS específico (em vez de simples iframe) para
+features como proteção anti-pirataria ou analytics avançado, o player pode
+precisar de ajuste nessa hora.

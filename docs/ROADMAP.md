@@ -27,42 +27,45 @@ controle do projeto, junto com Linear (`linear.app/bow360/team/BOW`).
 - [x] Shell de navegação (rail lateral + área de conteúdo)
 
 ## Fase 1 — Galeria de Prompts
-**Status:** em andamento
+**Status:** concluído
 
 - [x] Seed de prompts de exemplo na tabela `prompts` (docs/seed-prompts.sql)
-- [ ] Grid filtrável por categoria + busca
-- [ ] Modal de preview com copiar + favoritar
-- [ ] Tela "Meus favoritos"
+- [x] Grid filtrável por categoria + busca
+- [x] Modal de preview com copiar + favoritar
+- [x] Tela "Meus favoritos"
 
 ## Fase Admin — Painel de gestão de conteúdo
-**Status:** não iniciado (ver DECISIONS.md #009)
+**Status:** concluído
 
-- [ ] Rota `/admin` protegida por `profiles.role = 'admin'`
-- [ ] CRUD de Prompts (substitui inserts manuais via SQL Editor)
-- [ ] CRUD de Formações → Trilhas → Cursos → Aulas
+- [x] Rota `/admin` protegida por `profiles.role = 'admin'`
+- [x] CRUD de Prompts (substitui inserts manuais via SQL Editor)
+- [x] CRUD de Formações → Trilhas → Cursos → Aulas
 - [ ] CRUD de Planos
 - [ ] Upload de imagens (preview de prompt, capa de formação) via Supabase Storage
 
 ## Fase 2 — Gerador de Prompt
-**Status:** não iniciado
+**Status:** concluído
 
-- [x] Decisão de provider padrão (gerenciado) para o gerador — **Claude** (DECISIONS.md #010)
-- [ ] Interface de descrição → prompt gerado
-- [ ] Integração com Claude via API route do Next.js (GPT/Gemini disponíveis via BYOK)
+- [x] Decisão de provider padrão (gerenciado) — **Claude** (DECISIONS.md #010)
+- [x] Interface de descrição → prompt gerado
+- [x] Integração com Claude via API route do Next.js (GPT/Gemini disponíveis via BYOK)
 
 ## Fase 3 — Cofre de Chaves (BYOK)
 **Status:** concluído
 
 - [x] Decisão de criptografia — AES-256-GCM via Node crypto + ENCRYPTION_KEY (ver DECISIONS.md #012)
-- [x] Tela "Conexões" no perfil (/conexoes) — 4 providers, salvar/substituir/remover
+- [x] Tela "Conexões" (/conexoes) — 4 providers, salvar/substituir/remover
 - [ ] Validação de chave ao salvar (testar a chave antes de marcar `is_active`) — iteração futura
 
 ## Fase 4 — Estúdio UGC · Imagem
-**Status:** não iniciado
+**Status:** em andamento
 
-- [ ] Workflow n8n: recebe webhook → fal.ai Nano Banana → callback
-- [ ] Tela de submissão (descrição + imagem de referência)
-- [ ] Status em tempo real (`queued → generating_image → done`)
+- [x] Tela de submissão (prompt + imagem de referência via URL)
+- [x] API route server-side: cria `generations`, dispara webhook n8n
+- [x] Webhook callback `/api/webhooks/fal-callback` para n8n → Next.js
+- [x] Status em tempo real via polling (`queued → generating_image → done`)
+- [x] Mock mode (`UGC_MOCK_MODE=true`) para testar sem n8n — validado
+- [ ] Workflow real do n8n: recebe webhook → fal.ai Nano Banana → callback (adiado para depois do deploy, ver DECISIONS.md #012)
 
 ## Fase 5 — Estúdio UGC · Vídeo + Créditos + Histórico
 **Status:** não iniciado
@@ -73,11 +76,13 @@ controle do projeto, junto com Linear (`linear.app/bow360/team/BOW`).
 - [ ] Decisão final: crédito avulso vs. cota de plano vs. híbrido (DECISIONS.md #003)
 
 ## Fase 6 — Trilhas + Assinatura
-**Status:** não iniciado
+**Status:** concluído (telas de conteúdo); Asaas/pagamento em sessão dedicada futura
 
-- [ ] Seed das 5 Formações de topo (PRD.md seção 4)
-- [ ] Telas: lista de Formações, página de Trilha, player de Aula
+- [x] Telas: lista de Formações (`/formacoes`), currículo de Trilha, player de Aula com progresso
+- [x] CRUD admin completo: Formações → Trilhas → Cursos → Aulas (drill-down com breadcrumb)
+- [x] Progresso por aula — `lesson_progress` com upsert + "Marcar como concluída"
 - [x] Decisão de gateway de pagamento — **Asaas** (DECISIONS.md #004)
+- [ ] Seed das 5 Formações de topo (PRD.md seção 4) — popular via admin panel
 - [ ] Webhook do Asaas → cria/atualiza `subscriptions`
 - [ ] Workflow n8n: webhook "pagamento falhou" → notificação WhatsApp/e-mail → retry
 
