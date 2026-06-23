@@ -1,4 +1,4 @@
-# Design System — BOW IA Studio
+# Design System — BOW Creator
 
 > **Fonte da verdade:** extraído diretamente de `style.css` / `index.html` de
 > `bowia.com.br` (arquivos reais, não estimados). Qualquer dúvida visual futura,
@@ -97,4 +97,4 @@ Para palavras de destaque dentro de headlines: `background: linear-gradient(100d
 
 Os tokens deste arquivo estão também empacotados em
 `.claude/skills/bow-design-system/SKILL.md` para carregamento automático em
-qualquer sessão de Claude Code que toque em frontend do Studio.
+qualquer sessão de Claude Code que toque em frontend do Creator.

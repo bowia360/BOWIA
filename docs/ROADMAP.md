@@ -1,4 +1,4 @@
-# Roadmap — BOW IA Studio
+# Roadmap — BOW Creator
 
 ## Como usar este arquivo
 
@@ -11,27 +11,37 @@ controle do projeto, junto com Linear (`linear.app/bow360/team/BOW`).
 ## Fase 0 — Fundação
 **Status:** em andamento
 
+- [ ] **Registrar o domínio bowcreator.com.br** (ver DECISIONS.md #008) ← ação simples, fazer logo
 - [x] Design system extraído do CSS real (`DESIGN-SYSTEM.md`)
 - [x] Mockup de login fiel ao design system (Visualizer)
 - [x] Schema de banco v2 desenhado (Formação→Trilha→Curso→Aula + UGC + créditos)
 - [x] SQL completo com RLS pronto (`DATABASE.md`)
 - [x] Projeto Supabase `studiobowia` criado (conta `bowia360@gmail.com`)
 - [x] Repositório `github.com/bowia360/BOWIA` criado
-- [ ] **Rodar o SQL de `DATABASE.md` no painel Supabase** ← próxima ação do Rafael
-- [ ] Girar a `service_role key` exposta em chat
-- [ ] Scaffold do Next.js no repo, com `.env.example` preenchido
-- [ ] Tela de login/cadastro real (não mockup) conectada ao Supabase Auth — cadastro livre e imediato
+- [x] **Rodar o SQL de `DATABASE.md` no painel Supabase** — 13 tabelas confirmadas
+- [x] Girar a `service_role key` exposta em chat
+- [x] Scaffold do Next.js no repo, com `.env.example` preenchido
+- [x] Tela de login/cadastro real (não mockup) conectada ao Supabase Auth — cadastro livre e imediato
 - [x] Decisão: cadastro híbrido leve (DECISIONS.md #001) — livre + paywall por assinatura
 - [ ] Middleware de guard: checa `subscriptions.status = 'active'` antes de liberar Trilha/Estúdio/Galeria completa
-- [ ] Shell de navegação (rail lateral + área de conteúdo)
+- [x] Shell de navegação (rail lateral + área de conteúdo)
 
 ## Fase 1 — Galeria de Prompts
-**Status:** não iniciado
+**Status:** concluído
 
-- [ ] Seed de prompts de exemplo na tabela `prompts`
-- [ ] Grid filtrável por categoria + busca
-- [ ] Modal de preview com copiar + favoritar
-- [ ] Tela "Meus favoritos"
+- [x] Seed de prompts de exemplo na tabela `prompts` (docs/seed-prompts.sql)
+- [x] Grid filtrável por categoria + busca
+- [x] Modal de preview com copiar + favoritar
+- [x] Tela "Meus favoritos"
+
+## Fase Admin — Painel de gestão de conteúdo
+**Status:** não iniciado (ver DECISIONS.md #009)
+
+- [ ] Rota `/admin` protegida por `profiles.role = 'admin'`
+- [ ] CRUD de Prompts (substitui inserts manuais via SQL Editor)
+- [ ] CRUD de Formações → Trilhas → Cursos → Aulas
+- [ ] CRUD de Planos
+- [ ] Upload de imagens (preview de prompt, capa de formação) via Supabase Storage
 
 ## Fase 2 — Gerador de Prompt
 **Status:** não iniciado
@@ -74,7 +84,7 @@ controle do projeto, junto com Linear (`linear.app/bow360/team/BOW`).
 ## Fase 7 — Empacotar a oferta combo
 **Status:** não iniciado
 
-- [ ] Order bump do Studio na oferta do BOW Innovation Works
+- [ ] Order bump do Creator na oferta do BOW Innovation Works
 - [ ] Página de planos/preços
 
 ---

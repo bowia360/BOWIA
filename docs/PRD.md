@@ -1,25 +1,27 @@
-# PRD — BOW IA Studio
+# PRD — BOW Creator
 
 > **Status:** Fase 0 — Fundação
 > **Última atualização:** 2026-06-23
 > **Owner:** Rafael Gullo Mendes (BOW 360 Digital)
+> **Nome do produto:** BOW Creator
+> **Domínio:** bowcreator.com.br (domínio próprio, não subdomínio — ver DECISIONS.md #008)
 
 ## 1. O que é
 
-BOW IA Studio é a plataforma de membros da BOW 360. Diferente de um curso comum, o
-Studio entrega **conteúdo + ferramentas que geram asset real** (prompt, imagem, vídeo
+BOW Creator é a plataforma de membros da BOW 360. Diferente de um curso comum, o
+Creator entrega **conteúdo + ferramentas que geram asset real** (prompt, imagem, vídeo
 UGC). O aluno não só assiste — ele produz dentro da própria plataforma.
 
 **Tese central:** "IA é ferramenta, o valor está na aplicação" (do material BOW 360
-sobre Geração Automática de Vídeos UGC) — o Studio é essa frase virada produto.
+sobre Geração Automática de Vídeos UGC) — o Creator é essa frase virada produto.
 
 ## 2. Por que existe (problema → solução)
 
-| Problema | Como o Studio resolve |
+| Problema | Como o Creator resolve |
 |---|---|
 | Curso comum não gera recorrência — aluno assiste e esquece | Ferramentas nativas (galeria, gerador de prompt, Estúdio UGC) dão motivo pra voltar toda semana |
 | Conteúdo de IA fica abstrato sem prática guiada | Trilhas terminam em "Projeto" — o aluno usa a ferramenta de verdade, não só vê o professor usar |
-| BOW 360 vende workshop pontual, sem upsell recorrente | Studio vira order bump / combo no funil do workshop, sobe ticket e LTV sem CAC novo |
+| BOW 360 vende workshop pontual, sem upsell recorrente | Creator vira order bump / combo no funil do workshop, sobe ticket e LTV sem CAC novo |
 
 ## 3. Módulos do produto
 
@@ -53,7 +55,7 @@ sobre Geração Automática de Vídeos UGC) — o Studio é essa frase virada pr
 ## 5. Monetização
 
 1. **Assinatura recorrente** (mensal/anual) — motor de MRR, dá acesso às Formações + galeria + gerador de prompt
-2. **Combo com workshop** — Studio como order bump na oferta do BOW Innovation Works
+2. **Combo com workshop** — Creator como order bump na oferta do BOW Innovation Works
 3. **Packs de crédito UGC** — consumo de vídeo/imagem, margem alta, escala por uso
 
 **Modelo de consumo do Estúdio UGC:** ainda em decisão de negócio (ver DECISIONS.md #003).

@@ -1,4 +1,4 @@
-# API Integrations — BOW IA Studio
+# API Integrations — BOW Creator
 
 > Contratos de chamada e convenções para cada integração externa. Chaves reais
 > nunca aparecem aqui — sempre referenciadas via variável de ambiente (ver `.env.example`).
@@ -63,5 +63,5 @@ Ver `DATABASE.md` para schema completo e `.env.example` para variáveis.
 
 **MCP conectado nesta sessão:** sim, mas autenticado na conta pessoal do Rafael
 (`Hub-Centro-Metropolitano-V2`), que **não vê** o projeto `studiobowia` (criado em
-`bowia360@gmail.com`). Para inspeção via MCP do projeto do Studio, reconectar
+`bowia360@gmail.com`). Para inspeção via MCP do projeto do Creator, reconectar
 com a conta certa no Claude Code/Cursor, ou operar via SQL Editor manual no painel.

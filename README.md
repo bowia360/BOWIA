@@ -1,8 +1,11 @@
-# BOW IA Studio
+# BOW Creator
 
 Plataforma de membros da BOW 360 — trilhas de formação + ferramentas nativas de
 geração de imagem/vídeo UGC com IA. Não é "mais um curso": é o ambiente de
 trabalho onde o aluno aprende e produz no mesmo lugar.
+
+**Domínio:** bowcreator.com.br (ver DECISIONS.md #008 — domínio próprio, não
+subdomínio, para permitir venda independente do workshop no futuro)
 
 ## Como navegar esta documentação
 

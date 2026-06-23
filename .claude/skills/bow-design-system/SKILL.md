@@ -1,6 +1,6 @@
 ---
 name: bow-design-system
-description: Use this skill whenever building, styling, or reviewing ANY frontend component, page, or visual element for the BOW IA Studio project (or the bowia.com.br institutional site). Triggers on requests involving UI components, pages, colors, typography, buttons, cards, badges, or any visual/CSS work in this codebase. This skill is the single source of truth for visual tokens — always check it before guessing a color, font, or effect, and before reaching for generic glassmorphism/gradient defaults.
+description: Use this skill whenever building, styling, or reviewing ANY frontend component, page, or visual element for the BOW Creator project (or the bowia.com.br institutional site). Triggers on requests involving UI components, pages, colors, typography, buttons, cards, badges, or any visual/CSS work in this codebase. This skill is the single source of truth for visual tokens — always check it before guessing a color, font, or effect, and before reaching for generic glassmorphism/gradient defaults.
 ---
 
 # BOW Design System

@@ -1,4 +1,4 @@
-# Decisions Log — BOW IA Studio
+# Decisions Log — BOW Creator
 
 > Log de decisões importantes, com data e motivo. Formato ADR simplificado:
 > **Contexto → Decisão → Motivo → Alternativas consideradas → Status**
@@ -14,7 +14,7 @@ conta sem pagar nada antes (sem espera de webhook). Acesso a conteúdo de valor
 `subscriptions.status = 'active'`, checado em tempo real via middleware/guard
 no Next.js.
 
-**Motivo:** o Studio é vendido como order bump no workshop (BOW Innovation
+**Motivo:** o Creator é vendido como order bump no workshop (BOW Innovation
 Works). Com gated rígido, o webhook do Asaas precisaria criar conta do zero no
 momento da compra (`auth.users` + `profile` + `subscription` tudo junto) — mais
 superfície de falha (pagou e não recebeu acesso = ticket de suporte). Com
@@ -44,10 +44,10 @@ sempre acessíveis a qualquer usuário autenticado.
 ("Social Painel"), usado por outros produtos internos (não expostos a pagamento
 de terceiros).
 
-**Decisão:** Studio usa **Supabase Cloud**, projeto novo e isolado (`studiobowia`,
+**Decisão:** Creator usa **Supabase Cloud**, projeto novo e isolado (`studiobowia`,
 ref `oqfyuigdhdpnvlprqdvj`), na conta separada `bowia360@gmail.com`.
 
-**Motivo:** o Studio vai cobrar de gente de fora — precisa de backup automático,
+**Motivo:** o Creator vai cobrar de gente de fora — precisa de backup automático,
 isolamento de rede gerenciado, e patches de segurança sem o Rafael precisar ser
 DBA. Self-hosted faz sentido pra ferramenta interna onde o próprio Rafael
 controla o risco; não para produto pago com terceiros.
@@ -86,7 +86,7 @@ prompt) na assinatura; UGC pesado por crédito; BYOK permite economizar crédito
 **Decisão:** Asaas como único gateway na v1.
 
 **Motivo:** Rafael já tem conta Asaas ativa e verificada (zero fricção de KYC).
-Público do Studio é 100% brasileiro — PIX e boleto nativos do Asaas convertem
+Público do Creator é 100% brasileiro — PIX e boleto nativos do Asaas convertem
 melhor que cartão nesse perfil de oferta (mesmo padrão do funil de workshop:
 Lote 1 R$97 / Lote 2 R$197, ticket baixo onde PIX é decisivo).
 
@@ -96,7 +96,7 @@ maduro quanto Stripe Billing. Mitigação: workflow no n8n — webhook do Asaas
 Aproveita a infra e expertise que o Rafael já tem em n8n.
 
 **Caminho de expansão:** `subscriptions.provider` já é campo texto livre — se
-um dia o Studio vender para fora do Brasil, Stripe pode ser adicionado como
+um dia o Creator vender para fora do Brasil, Stripe pode ser adicionado como
 segundo provider sem mudança de schema, não é decisão fechada para sempre.
 
 **Alternativa considerada:** Stripe — descartado por agora (conta nova exigiria
@@ -141,3 +141,62 @@ decisão estrutural, pode ser revisitada sem custo de retrabalho.
 Secret keys` assim que o schema estiver criado e estável, e atualizar `.env`
 local. Não é uma emergência (conversa privada), mas é a prática correta de
 higiene de segredo.
+
+---
+
+### #008 — Nome final do produto e domínio próprio (não subdomínio)
+**Status:** ✅ decidido — 2026-06-23
+
+**Decisão:** o produto se chama **BOW Creator**, com domínio próprio
+**bowcreator.com.br** — não um subdomínio de bowia.com.br.
+
+**Motivo:** Rafael confirmou que quer o produto claramente dentro da família
+BOW (aproveitando autoridade já construída: ESX 2026, OpenStartups, cases
+reais), mas também confirmou que o produto pode crescer e ser vendido sozinho
+no futuro, sem depender do workshop como funil único. Subdomínio
+(`studio.bowia.com.br`) prenderia a percepção de "seção de outro site" e
+geraria custo de migração (perda de SEO acumulado, gestão de redirects) se um
+dia precisasse virar domínio próprio. Custo de registro de domínio
+(~R$40/ano) é desprezível frente a esse risco — melhor registrar certo desde o início.
+
+**Por que "Creator" e não "Studio":** "Studio" colidia conceitualmente com
+"BOW IA Studio", nome de trabalho usado nas primeiras sessões de planejamento,
+mas também soava genérico demais. "Creator" comunica diretamente a tese do
+produto (o aluno cria/produz, não só assiste) e evita colisão de nome com
+`bowia.com.br` (o workshop) e `bow360.cloud` (infraestrutura). O próprio
+Rafael já estava nomeando a pasta local do projeto como "BOW-CREATOR" antes
+mesmo dessa decisão formal — sinal de que o nome já tinha se firmado na prática.
+
+**Identidade visual:** mantém o design system de `bowia.com.br` (grid + glass
++ azul neon + Sora/Inter) para reforçar a família visual, mesmo com domínio
+separado — ver DESIGN-SYSTEM.md.
+
+**Ação pendente:** registrar `bowcreator.com.br` o mais rápido possível para
+reservar o nome, mesmo antes do deploy estar pronto.
+
+---
+
+### #009 — Painel administrativo para gestão de conteúdo
+**Status:** 🟡 reconhecido, não implementado ainda
+
+**Contexto:** `profiles.role` já modela `'student' | 'admin'` desde o schema
+original (DATABASE.md), e as policies de RLS já restringem escrita em
+`prompts`/`formations`/`tracks`/`courses`/`lessons` a `service_role` — ou seja,
+o banco já está pronto para isso. O que falta é a **interface**.
+
+**Decisão:** criar uma Fase dedicada (ver ROADMAP.md "Fase Admin") para uma
+área `/admin` protegida por `role = 'admin'`, com CRUD simples para:
+- Prompts da Galeria (título, categoria, texto, preview)
+- Formações → Trilhas → Cursos → Aulas (estrutura completa)
+- Planos de assinatura
+
+**Por que não é parte da Fase 1:** misturar CRUD de admin com a primeira tela
+pública (Galeria) atrasaria a entrega visual. Melhor entregar a Galeria
+funcionando com seed manual primeiro, validar a experiência do aluno, e só
+depois construir a ferramenta de gestão — o Rafael não vai precisar cadastrar
+conteúdo em volume alto nas primeiras semanas.
+
+**Alternativa descartada por agora:** usar um CMS headless externo (Sanity,
+Strapi) — adicionaria uma peça de infra extra sem necessidade clara no estágio
+atual; o painel próprio é mais simples e já usa a mesma stack (Next.js +
+Supabase) sem custo adicional.

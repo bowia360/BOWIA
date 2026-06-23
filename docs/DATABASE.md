@@ -1,4 +1,4 @@
-# Database — BOW IA Studio
+# Database — BOW Creator
 
 > **Projeto Supabase:** `studiobowia` (ref `oqfyuigdhdpnvlprqdvj`, região `sa-east-1`)
 > **Conta:** `bowia360@gmail.com` — separada da conta pessoal do Rafael
@@ -33,7 +33,7 @@ regra de aplicação, não na tabela.
 ```sql
 -- ============================================================
 -- BOW IA STUDIO — SCHEMA INICIAL (Fase 0)
--- Rodar no SQL Editor do projeto "studiobowia"
+-- Rodar no SQL Editor do projeto "studiobowia" (renomear para refletir BOW Creator quando possível)
 -- ============================================================
 
 -- extensão para gerar UUIDs

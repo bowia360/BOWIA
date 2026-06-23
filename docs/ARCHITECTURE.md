@@ -1,4 +1,4 @@
-# Arquitetura — BOW IA Studio
+# Arquitetura — BOW Creator
 
 ## Stack
 
@@ -16,12 +16,12 @@
 ## Infraestrutura existente do Rafael (contexto, não construir do zero)
 
 - **VPS com Coolify** — já hospeda Social Painel, n8n, outros serviços BOW 360
-- **Supabase self-hosted** (`supabase.bow360.cloud`) — usado por outros produtos (Social Painel). **Não usado pelo Studio** — Studio usa Supabase Cloud separado.
+- **Supabase self-hosted** (`supabase.bow360.cloud`) — usado por outros produtos (Social Painel). **Não usado pelo Creator** — Creator usa Supabase Cloud separado.
 - **n8n** (`automacoes.bow360.cloud`) — já em produção, com regras de segurança estabelecidas (ver abaixo)
 - **GitHub** — org pessoal `BOW360`, conta separada `bowia360` para este projeto
 - **Linear** (`linear.app/bow360/team/BOW`) e **Miro** — já conectados como ferramentas de gestão
 
-## Regras de workflow herdadas do Rafael (aplicam-se também ao Studio)
+## Regras de workflow herdadas do Rafael (aplicam-se também ao Creator)
 
 > Estas regras já são praticadas pelo Rafael em outros projetos n8n/produção e
 > devem ser seguidas por qualquer agente (Claude Code, Cursor, ou humano) trabalhando neste projeto:
@@ -34,7 +34,7 @@
 ## Fluxo de dados — Estúdio UGC (melhorias sobre o blueprint original)
 
 O PDF de referência descreve um fluxo linear simples (form → espera → e-mail). O
-Studio melhora isso em 4 pontos (ver PRD.md seção 3.2 e DECISIONS.md):
+Creator melhora isso em 4 pontos (ver PRD.md seção 3.2 e DECISIONS.md):
 
 1. **Fila assíncrona com status visível** — `generations.status` transita entre
    `queued → generating_image → generating_video → done/failed`, refletido em tempo
