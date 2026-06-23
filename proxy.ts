@@ -38,6 +38,7 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith('/galeria') ||
     pathname.startsWith('/gerador') ||
     pathname.startsWith('/estudio') ||
+    pathname.startsWith('/conexoes') ||
     pathname.startsWith('/favoritos') ||
     pathname.startsWith('/perfil') ||
     pathname.startsWith('/admin')
