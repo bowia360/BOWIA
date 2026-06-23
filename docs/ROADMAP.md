@@ -44,11 +44,11 @@ controle do projeto, junto com Linear (`linear.app/bow360/team/BOW`).
 - [ ] Upload de imagens (preview de prompt, capa de formação) via Supabase Storage
 
 ## Fase 2 — Gerador de Prompt
-**Status:** concluído
+**Status:** não iniciado
 
-- [x] Decisão de provider padrão (gerenciado) — **Claude** (DECISIONS.md #010)
-- [x] Interface de descrição → prompt gerado
-- [x] Integração com Claude via API route do Next.js (GPT/Gemini disponíveis via BYOK)
+- [x] Decisão de provider padrão (gerenciado) para o gerador — **Claude** (DECISIONS.md #010)
+- [ ] Interface de descrição → prompt gerado
+- [ ] Integração com Claude via API route do Next.js (GPT/Gemini disponíveis via BYOK)
 
 ## Fase 3 — Cofre de Chaves (BYOK)
 **Status:** não iniciado

@@ -200,3 +200,49 @@ conteúdo em volume alto nas primeiras semanas.
 Strapi) — adicionaria uma peça de infra extra sem necessidade clara no estágio
 atual; o painel próprio é mais simples e já usa a mesma stack (Next.js +
 Supabase) sem custo adicional.
+
+---
+
+### #010 — Provider gerenciado padrão do Gerador de Prompt (Fase 2)
+**Status:** ✅ decidido — 2026-06-23
+
+**Decisão:** Claude (Anthropic) como provider gerenciado padrão.
+
+**Motivo:** Rafael já tem `ANTHROPIC_API_KEY` ativa (mesma usada pelo Claude
+Code) — zero setup novo. Tecnicamente, Claude tende a produzir descrições
+visuais mais estruturadas e detalhadas, o que é exatamente o formato que um
+prompt de imagem/vídeo (Nano Banana, Veo3) precisa — evita prompts genéricos
+ou rasos demais.
+
+**Não é decisão exclusiva:** BYOK (DECISIONS.md, ver PRD.md seção 5) já
+permite o aluno avançado plugar GPT ou Gemini por conta própria. Esta decisão
+define apenas o que roda quando o aluno **não** configurou chave própria.
+
+**Alternativas consideradas:**
+- GPT — sem vantagem técnica clara sobre Claude para este caso, exigiria
+  configurar uma chave nova
+- Gemini — mais barato por token e multimodal nativo (útil para análise de
+  imagem futura), mas qualidade de prompt descritivo menos consistente nos
+  testes informais até aqui; pode ser revisitado se o volume de uso justificar
+  o custo menor
+
+---
+
+### #011 — Inverter ordem: Estúdio UGC (Fase 4) antes do Cofre de Chaves (Fase 3)
+**Status:** ✅ decidido — 2026-06-23
+
+**Decisão:** construir o Estúdio UGC (geração de imagem/vídeo via fal.ai,
+usando chave gerenciada) antes do Cofre de Chaves / BYOK.
+
+**Motivo:** BYOK só tem valor real depois que existe uma ferramenta para a
+chave do usuário ser usada. Construir o Cofre de Chaves primeiro significaria
+testar "salvar e criptografar uma chave" sem nenhum consumo real dela — função
+sem propósito visível. Construindo o Estúdio UGC primeiro com a chave
+gerenciada (`FAL_API_KEY`, já configurada desde a Fase 0), validamos o fluxo
+completo (prompt → geração → resultado) e só depois adicionamos BYOK como
+upgrade ("agora você pode plugar sua própria chave para economizar crédito"),
+em vez de construir no vácuo.
+
+**Numeração das fases no ROADMAP.md:** mantém os nomes "Fase 3" e "Fase 4"
+como estavam (para não reescrever referências cruzadas em outros documentos),
+mas a ordem de execução real passa a ser Fase 4 → Fase 3.
