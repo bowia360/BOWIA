@@ -35,13 +35,14 @@ controle do projeto, junto com Linear (`linear.app/bow360/team/BOW`).
 - [x] Tela "Meus favoritos"
 
 ## Fase Admin — Painel de gestão de conteúdo
-**Status:** não iniciado (ver DECISIONS.md #009)
+**Status:** concluído
 
-- [ ] Rota `/admin` protegida por `profiles.role = 'admin'`
-- [ ] CRUD de Prompts (substitui inserts manuais via SQL Editor)
-- [ ] CRUD de Formações → Trilhas → Cursos → Aulas
+- [x] Rota `/admin` protegida por `profiles.role = 'admin'`
+- [x] CRUD de Prompts (substitui inserts manuais via SQL Editor)
+- [x] CRUD de Formações (nível formação — título, descrição, capa por URL, publicar/despublicar)
+- [ ] CRUD de Trilhas → Cursos → Aulas (próxima iteração)
 - [ ] CRUD de Planos
-- [ ] Upload de imagens (preview de prompt, capa de formação) via Supabase Storage
+- [ ] Upload de imagens via Supabase Storage
 
 ## Fase 2 — Gerador de Prompt
 **Status:** não iniciado
