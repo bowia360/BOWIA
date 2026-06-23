@@ -25,6 +25,19 @@ const navItems = [
     ),
   },
   {
+    href: '/gerador',
+    label: 'Gerador de Prompt',
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 3c-1 3-4 5-4 8a4 4 0 0 0 8 0c0-3-3-5-4-8z" />
+        <path d="M12 15v7" />
+        <path d="M9 19h6" />
+        <path d="M9 12.5 7 11" />
+        <path d="M15 12.5 17 11" />
+      </svg>
+    ),
+  },
+  {
     href: '/favoritos',
     label: 'Meus Favoritos',
     icon: (

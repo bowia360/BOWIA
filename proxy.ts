@@ -36,6 +36,7 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith('/formacoes') ||
     pathname.startsWith('/studio') ||
     pathname.startsWith('/galeria') ||
+    pathname.startsWith('/gerador') ||
     pathname.startsWith('/favoritos') ||
     pathname.startsWith('/perfil') ||
     pathname.startsWith('/admin')
