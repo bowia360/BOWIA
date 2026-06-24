@@ -1,7 +1,12 @@
 import { createClient } from '@/utils/supabase/server'
+import { getSubscriptionStatus } from '@/utils/subscription'
+import { redirect } from 'next/navigation'
 import GaleriaClient from './GaleriaClient'
 
 export default async function GaleriaPage() {
+  const hasSubscription = await getSubscriptionStatus()
+  if (!hasSubscription) redirect('/planos')
+
   const supabase = await createClient()
 
   const {

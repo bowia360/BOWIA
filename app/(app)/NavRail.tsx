@@ -4,10 +4,18 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { logout } from '@/app/(auth)/actions'
 
-const navItems = [
+type NavItem = {
+  href: string
+  label: string
+  gated: boolean
+  icon: React.ReactNode
+}
+
+const navItems: NavItem[] = [
   {
     href: '/dashboard',
     label: 'Dashboard',
+    gated: false,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -18,6 +26,7 @@ const navItems = [
   {
     href: '/formacoes',
     label: 'Formações',
+    gated: false,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
@@ -28,6 +37,7 @@ const navItems = [
   {
     href: '/galeria',
     label: 'Galeria de Prompts',
+    gated: true,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
@@ -37,6 +47,7 @@ const navItems = [
   {
     href: '/gerador',
     label: 'Gerador de Prompt',
+    gated: true,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 3c-1 3-4 5-4 8a4 4 0 0 0 8 0c0-3-3-5-4-8z" />
@@ -50,6 +61,7 @@ const navItems = [
   {
     href: '/estudio',
     label: 'Estúdio UGC',
+    gated: true,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
@@ -61,6 +73,7 @@ const navItems = [
   {
     href: '/favoritos',
     label: 'Meus Favoritos',
+    gated: false,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
@@ -70,6 +83,7 @@ const navItems = [
   {
     href: '/conexoes',
     label: 'Conexões',
+    gated: false,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
@@ -80,9 +94,10 @@ const navItems = [
 
 type Props = {
   isAdmin: boolean
+  hasSubscription: boolean
 }
 
-export default function NavRail({ isAdmin }: Props) {
+export default function NavRail({ isAdmin, hasSubscription }: Props) {
   const pathname = usePathname()
 
   return (
@@ -95,20 +110,49 @@ export default function NavRail({ isAdmin }: Props) {
       </Link>
 
       <nav className="flex-1 flex flex-col gap-1 w-full px-2">
-        {navItems.map(({ href, label, icon }) => {
+        {navItems.map(({ href, label, icon, gated }) => {
           const isActive = pathname === href || pathname.startsWith(href + '/')
+          const locked = gated && !hasSubscription
           return (
             <Link
               key={href}
               href={href}
-              title={label}
+              title={locked ? 'Assine para acessar' : label}
               className={`w-full h-10 flex items-center justify-center rounded-[10px] transition-colors ${
-                isActive
+                locked
+                  ? 'text-text-dim opacity-50 hover:opacity-70 hover:bg-white/[0.03]'
+                  : isActive
                   ? 'bg-neon-blue/15 text-neon-blue-lt'
                   : 'text-text-muted hover:text-text-off hover:bg-white/5'
               }`}
             >
-              {icon}
+              <span className="relative">
+                {icon}
+                {locked && (
+                  <span
+                    className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full flex items-center justify-center"
+                    style={{
+                      background: '#080c14',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                    }}
+                  >
+                    <svg
+                      width="7"
+                      height="7"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                      <path
+                        d="M7 11V7a5 5 0 0 1 10 0v4"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                      />
+                    </svg>
+                  </span>
+                )}
+              </span>
             </Link>
           )
         })}

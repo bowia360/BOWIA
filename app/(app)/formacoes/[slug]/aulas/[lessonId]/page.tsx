@@ -1,4 +1,5 @@
 import { createClient } from '@/utils/supabase/server'
+import { getSubscriptionStatus } from '@/utils/subscription'
 import { redirect, notFound } from 'next/navigation'
 import LessonClient from './LessonClient'
 
@@ -56,6 +57,10 @@ export default async function LessonPage({
   params: Promise<{ slug: string; lessonId: string }>
 }) {
   const { slug, lessonId } = await params
+
+  const hasSubscription = await getSubscriptionStatus()
+  if (!hasSubscription) redirect('/planos')
+
   const supabase = await createClient()
   const {
     data: { user },

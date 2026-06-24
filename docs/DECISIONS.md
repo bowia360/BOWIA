@@ -352,3 +352,36 @@ problemas de UX foram identificados:
 - `CoverImage` client component com `onError` que oculta o `<img>` quando falha,
   revelando o gradiente de fundo já presente como placeholder — sem JS extra no bundle
   além do handler inline.
+
+---
+
+### #016 — Guard de assinatura: enforcement no Server Component, não na edge
+**Status:** ✅ decidido — 2026-06-24
+
+**Contexto:** DECISIONS.md #001 definiu modelo híbrido leve (cadastro livre, paywall
+por assinatura ativa). Na Fase 6 (Parte 1 — sem deploy ainda), foi necessário decidir
+onde rodar o gate de acesso.
+
+**Decisão:** o gate de assinatura corre no **Server Component de cada rota gated**
+(via `getSubscriptionStatus()` em `utils/subscription.ts`), não no edge middleware.
+O `proxy.ts` continua responsável apenas pelo guard de sessão (usuário autenticado).
+O helper usa `cache()` do React para deduplica a query DB por request — layout.tsx e
+page.tsx chamam a mesma função sem dobrar o custo.
+
+**Rotas gated** (redirect → `/planos` sem assinatura ativa):
+- `/galeria`, `/gerador`, `/estudio`, `/formacoes/[slug]/aulas/[lessonId]`
+
+**Rotas vitrine** (qualquer usuário logado):
+- `/formacoes`, `/formacoes/[slug]` (currículo como teaser, aulas com cadeado cosmético),
+  `/planos`, `/dashboard`, `/favoritos`, `/conexoes`
+
+**Por que não na edge (proxy.ts):** o edge runtime do Next.js não tem acesso ao
+cliente Supabase com cookie de sessão de forma confiável para queries de DB — serve
+para refresh de token e redirect de sessão, não para lógica de negócio.
+
+**Por que não num layout compartilhado de `(app)`:** um layout único bloquearia vitrine
+e admin junto com conteúdo pago — quebraria `/formacoes`, `/planos` e `/admin`.
+
+**Alternativa descartada:** criar um grupo de rotas `(gated)` com layout próprio — mais
+elegante em teoria, mas exigiria reestruturar a árvore de arquivos sem benefício real
+dado que o número de rotas gated é pequeno e estável.

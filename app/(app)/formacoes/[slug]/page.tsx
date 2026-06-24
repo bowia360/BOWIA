@@ -1,4 +1,5 @@
 import { createClient } from '@/utils/supabase/server'
+import { getSubscriptionStatus } from '@/utils/subscription'
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
 import { CoverImage } from '../CoverImage'
@@ -95,10 +96,13 @@ export default async function FormacaoPage({
   const formation = sortCurriculum(raw as unknown as Formation)
   const all = flatLessons(formation)
 
-  const { data: progressRows } = await supabase
-    .from('lesson_progress')
-    .select('lesson_id, completed, progress_percent')
-    .in('lesson_id', all.map((l) => l.id))
+  const [{ data: progressRows }, hasSubscription] = await Promise.all([
+    supabase
+      .from('lesson_progress')
+      .select('lesson_id, completed, progress_percent')
+      .in('lesson_id', all.map((l) => l.id)),
+    getSubscriptionStatus(),
+  ])
 
   const progressMap = new Map(
     (progressRows ?? []).map((p) => [p.lesson_id, p.completed as boolean])
@@ -148,7 +152,15 @@ export default async function FormacaoPage({
               </>
             )}
           </div>
-          {ctaLesson && (
+          {ctaLesson && !hasSubscription && (
+            <Link
+              href="/planos"
+              className="btn-primary inline-block px-6 py-2.5 text-sm"
+            >
+              Assine para acessar
+            </Link>
+          )}
+          {ctaLesson && hasSubscription && (
             <Link
               href={`/formacoes/${formation.slug}/aulas/${ctaLesson.id}`}
               className="btn-primary inline-block px-6 py-2.5 text-sm"
@@ -237,10 +249,26 @@ export default async function FormacaoPage({
                             >
                               {lesson.title}
                             </span>
-                            {lesson.duration_seconds && (
+                            {lesson.duration_seconds && hasSubscription && (
                               <span className="text-xs text-text-dim shrink-0">
                                 {formatDuration(lesson.duration_seconds)}
                               </span>
+                            )}
+                            {!hasSubscription && (
+                              <svg
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="text-text-dim shrink-0"
+                              >
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                              </svg>
                             )}
                           </Link>
                         )

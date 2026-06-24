@@ -41,6 +41,7 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith('/conexoes') ||
     pathname.startsWith('/favoritos') ||
     pathname.startsWith('/perfil') ||
+    pathname.startsWith('/planos') ||
     pathname.startsWith('/admin')
 
   if (!user && isAppRoute) {

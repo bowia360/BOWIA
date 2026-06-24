@@ -1,4 +1,5 @@
 import { createClient } from '@/utils/supabase/server'
+import { getSubscriptionStatus } from '@/utils/subscription'
 import NavRail from './NavRail'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
@@ -17,9 +18,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     isAdmin = profile?.role === 'admin'
   }
 
+  const hasSubscription = await getSubscriptionStatus()
+
   return (
     <div className="flex h-screen bg-bg-dark overflow-hidden">
-      <NavRail isAdmin={isAdmin} />
+      <NavRail isAdmin={isAdmin} hasSubscription={hasSubscription} />
       <main className="flex-1 overflow-auto">{children}</main>
     </div>
   )

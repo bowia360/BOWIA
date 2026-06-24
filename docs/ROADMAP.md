@@ -23,7 +23,7 @@ controle do projeto, junto com Linear (`linear.app/bow360/team/BOW`).
 - [x] Scaffold do Next.js no repo, com `.env.example` preenchido
 - [x] Tela de login/cadastro real (não mockup) conectada ao Supabase Auth — cadastro livre e imediato
 - [x] Decisão: cadastro híbrido leve (DECISIONS.md #001) — livre + paywall por assinatura
-- [ ] Middleware de guard: checa `subscriptions.status = 'active'` antes de liberar Trilha/Estúdio/Galeria completa
+- [x] Guard de assinatura **Parte 1** — gate em Server Component por rota gated, tela `/planos`, NavRail com cadeado cosmético (DECISIONS.md #016 — 2026-06-24); **Parte 2 (webhook Asaas + criação de subscription) após deploy**
 - [x] Shell de navegação (rail lateral + área de conteúdo)
 
 ## Fase 1 — Galeria de Prompts
@@ -83,7 +83,7 @@ controle do projeto, junto com Linear (`linear.app/bow360/team/BOW`).
 - [x] Progresso por aula — `lesson_progress` com upsert + "Marcar como concluída"
 - [x] Decisão de gateway de pagamento — **Asaas** (DECISIONS.md #004)
 - [ ] Seed das 5 Formações de topo (PRD.md seção 4) — popular via admin panel
-- [ ] Webhook do Asaas → cria/atualiza `subscriptions`
+- [ ] **Parte 2 (pós-deploy):** Webhook do Asaas → cria/atualiza `subscriptions`; botão "Assinar" na `/planos` → checkout Asaas
 - [ ] Workflow n8n: webhook "pagamento falhou" → notificação WhatsApp/e-mail → retry
 
 ## Fase 7 — Empacotar a oferta combo
