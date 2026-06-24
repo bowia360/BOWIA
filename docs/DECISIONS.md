@@ -414,7 +414,48 @@ campo do form de checkout.
 `externalReference = profile_id` é enviado tanto no customer quanto na subscription.
 Para eventos de subscription (`SUBSCRIPTION_DELETED`), o campo aparece no objeto
 `subscription` do webhook — confiável. Para eventos de payment (`PAYMENT_CONFIRMED`
-etc.), **não foi possível confirmar** se `payment.externalReference` herda da
-subscription sem teste real. O webhook usa `payment.subscription` → `provider_subscription_id`
-como lookup primário (confiável). Verificar no primeiro teste sandbox se o fallback via
-`payment.externalReference` é viável.
+etc.), confirmado em sandbox (2026-06-24) que `payment.externalReference` **herda**
+o valor da subscription — o fallback de lookup por `profile_id` está disponível
+também para eventos de payment. O webhook continua usando `payment.subscription` →
+`provider_subscription_id` como lookup primário (mais confiável e direto).
+
+---
+
+### #018 — Armadilhas de configuração descobertas durante integração Asaas sandbox
+**Status:** ✅ registrado — 2026-06-24
+
+**Contexto:** durante a integração e teste end-to-end do checkout Asaas em sandbox,
+duas armadilhas foram encontradas e documentadas para não se repetirem no deploy
+de produção.
+
+**Armadilha 1 — Expansão de `$` no `.env.local` pelo dotenv-expand do Next.js**
+
+A chave de API do Asaas começa com `$` (ex: `$aact_hmlg_...` em sandbox). O Next.js
+usa `dotenv-expand` ao processar `.env.local`: qualquer valor contendo `$NOME` é
+interpretado como expansão de variável de ambiente. Como não existe uma variável
+chamada `aact_hmlg_...`, o valor inteiro é silenciosamente substituído por string
+vazia — o servidor sobe sem erro, mas todas as chamadas à API retornam
+`"ASAAS_API_KEY não configurada"`.
+
+**Solução aplicada:** escapar o `$` inicial com `\` no `.env.local`:
+```
+ASAAS_API_KEY=\$aact_hmlg_...
+```
+O `dotenv-expand` resolve `\$` como `$` literal, entregando a chave completa ao
+`process.env`. Documentado com aviso visível no `.env.example` e no script de
+diagnóstico `scripts/verify-asaas-key.mjs` (usa `@next/env` diretamente,
+replicando o mesmo pipeline de carregamento do Next.js para confirmar o valor final
+sem precisar subir o servidor).
+
+**Armadilha 2 — URL base do Asaas sandbox: host incorreto**
+
+A URL do sandbox Asaas é `https://api-sandbox.asaas.com/v3` — não
+`https://sandbox.asaas.com/api/v3` como documentado informalmente em vários
+tutoriais. O host correto é `api-sandbox.asaas.com`, path `/v3/...`. Confirmado
+diretamente na spec oficial via MCP de docs do Asaas.
+
+**Confirmação adicional sobre `externalReference` em eventos de payment:**
+Confirmado em sandbox (2026-06-24) que `payment.externalReference` herda o
+`profile_id` enviado na criação da subscription. O webhook handler já documenta isso
+e pode usar este campo como fallback de lookup se `provider_subscription_id` falhar.
+Ver também DECISIONS.md #017.

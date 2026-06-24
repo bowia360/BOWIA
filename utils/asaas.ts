@@ -1,5 +1,5 @@
 const BASE_URL =
-  process.env.ASAAS_API_URL ?? 'https://sandbox.asaas.com/api/v3'
+  process.env.ASAAS_API_URL ?? 'https://api-sandbox.asaas.com/v3'
 const API_KEY = process.env.ASAAS_API_KEY ?? ''
 
 async function request<T>(

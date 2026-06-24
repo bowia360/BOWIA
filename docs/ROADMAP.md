@@ -24,7 +24,7 @@ controle do projeto, junto com Linear (`linear.app/bow360/team/BOW`).
 - [x] Tela de login/cadastro real (não mockup) conectada ao Supabase Auth — cadastro livre e imediato
 - [x] Decisão: cadastro híbrido leve (DECISIONS.md #001) — livre + paywall por assinatura
 - [x] Guard de assinatura **Parte 1** — gate em Server Component por rota gated, tela `/planos`, NavRail com cadeado cosmético (DECISIONS.md #016 — 2026-06-24)
-- [x] Guard de assinatura **Parte 2** — checkout Asaas (billingType UNDEFINED, CPF inline), webhook `/api/webhooks/asaas`, `utils/asaas.ts` (DECISIONS.md #017 — 2026-06-24); **código aplicado, NÃO testado — requer credenciais sandbox + URL pública (ngrok ou deploy)**
+- [x] Guard de assinatura **Parte 2** — checkout Asaas (billingType UNDEFINED, CPF inline), webhook `/api/webhooks/asaas`, `utils/asaas.ts` (DECISIONS.md #017 e #018 — 2026-06-24); **testado e validado end-to-end em sandbox**: clique em Assinar → redirecionamento para invoiceUrl → confirmação via endpoint sandbox → webhook PAYMENT_CONFIRMED recebido → `subscriptions.status` atualizado de `trialing` para `active`. ⚠️ Pendente de produção: registrar webhook no painel Asaas (ambiente prod, não sandbox) após deploy público, com nova API key de produção — lembrar do escape `\$` no `.env` de produção (ver DECISIONS.md #018).
 - [x] Shell de navegação (rail lateral + área de conteúdo)
 
 ## Fase 1 — Galeria de Prompts
@@ -84,7 +84,7 @@ controle do projeto, junto com Linear (`linear.app/bow360/team/BOW`).
 - [x] Progresso por aula — `lesson_progress` com upsert + "Marcar como concluída"
 - [x] Decisão de gateway de pagamento — **Asaas** (DECISIONS.md #004)
 - [ ] Seed das 5 Formações de topo (PRD.md seção 4) — popular via admin panel
-- [~] Webhook Asaas + checkout — **código aplicado (2026-06-24), NÃO testado; requer credenciais sandbox + URL pública (ngrok ou deploy)**
+- [x] Webhook Asaas + checkout — **testado e validado end-to-end em sandbox (2026-06-24)** — ver item "Parte 2" acima na Fase 0
 - [ ] Workflow n8n: webhook "pagamento falhou" → notificação WhatsApp/e-mail → retry
 
 ## Fase 7 — Empacotar a oferta combo

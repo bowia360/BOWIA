@@ -28,10 +28,11 @@ export async function POST(req: Request) {
       return Response.json({ received: true })
     }
 
-    // TODO: verify in first sandbox test whether payment.externalReference inherits
-    // the externalReference set on the subscription. If it does, add a fallback lookup
-    // here via externalReference (= profile_id) for edge cases where
-    // provider_subscription_id doesn't match (e.g. manual subscriptions).
+    // externalReference confirmed as valid fallback for payment events too (tested in
+    // sandbox, 2026-06-24) — not only SUBSCRIPTION_DELETED as previously assumed.
+    // payment.externalReference inherits the profile_id set on the subscription.
+    // provider_subscription_id (payment.subscription) remains the primary lookup key;
+    // externalReference is available as a fallback if needed in the future.
     const { data: sub } = await admin
       .from('subscriptions')
       .select('id')
