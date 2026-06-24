@@ -385,3 +385,36 @@ e admin junto com conteúdo pago — quebraria `/formacoes`, `/planos` e `/admin
 **Alternativa descartada:** criar um grupo de rotas `(gated)` com layout próprio — mais
 elegante em teoria, mas exigiria reestruturar a árvore de arquivos sem benefício real
 dado que o número de rotas gated é pequeno e estável.
+
+---
+
+### #017 — Asaas Parte 2: billingType UNDEFINED + CPF/CNPJ inline
+**Status:** ✅ decidido — 2026-06-24
+
+**Contexto:** implementação do checkout Asaas e webhook de pagamento (Parte 2 do paywall).
+Duas decisões de design do fluxo foram necessárias antes de codificar.
+
+**Decisão 1 — billingType: `UNDEFINED`**
+O `POST /subscriptions` no Asaas vai com `billingType: 'UNDEFINED'`. O Asaas exibe
+sua própria página de checkout onde o cliente escolhe entre PIX, boleto e cartão de
+crédito. Alternativa descartada: `BOLETO` hard-coded — restringiria o método de
+pagamento e contradiz a razão original de escolha do Asaas (ver DECISIONS.md #004:
+flexibilidade de métodos de pagamento no mercado brasileiro).
+
+**Decisão 2 — CPF/CNPJ inline em /planos (sem schema change)**
+O Asaas exige `cpfCnpj` para criação de customer. Opção escolhida: coletar o CPF/CNPJ
+no próprio form de checkout em `/planos`, validando apenas o tamanho (11 dígitos = CPF,
+14 = CNPJ) antes de chamar a API — sem salvar no nosso DB por ora.
+Opção descartada (Opção A): novo campo `profiles.cpf_cnpj` + página `/perfil` — correto
+a longo prazo mas requer schema migration + nova tela, sem necessidade para o MVP.
+**Retomar quando** `/perfil` for construído: migrar CPF para `profiles` e remover o
+campo do form de checkout.
+
+**Nota sobre `externalReference` em webhooks de payment:**
+`externalReference = profile_id` é enviado tanto no customer quanto na subscription.
+Para eventos de subscription (`SUBSCRIPTION_DELETED`), o campo aparece no objeto
+`subscription` do webhook — confiável. Para eventos de payment (`PAYMENT_CONFIRMED`
+etc.), **não foi possível confirmar** se `payment.externalReference` herda da
+subscription sem teste real. O webhook usa `payment.subscription` → `provider_subscription_id`
+como lookup primário (confiável). Verificar no primeiro teste sandbox se o fallback via
+`payment.externalReference` é viável.
